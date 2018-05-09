@@ -1,7 +1,21 @@
 osx_image: xcode8.3
 
+# Needed for node_canvas build
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libcairo2-dev
+      - libjpeg8-dev
+      - libpango1.0-dev
+      - libgif-dev
+      - g++-4.8
+env:
+  - CXX=g++-4.8
+  
 dist: trusty
-sudo: true
+sudo: false
 
 language: node_js
 node_js: "6"
