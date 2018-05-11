@@ -6,19 +6,20 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
+      - pax-utils
       - libcairo2-dev
       - libjpeg8-dev
       - libpango1.0-dev
       - libgif-dev
       - g++-4.8
 env:
-  - CXX=g++-4.8
+  - CXX=g++-4.9
 
 dist: trusty
 sudo: false
 
 language: node_js
-node_js: "6"
+node_js: "lts/*"
 
 env:
   global:
@@ -36,6 +37,8 @@ cache:
   - $HOME/.cache/electron-builder
   - $HOME/.npm/_prebuilds
 
+before_install:
+  - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then brew update && brew install pkg-config cairo pango libpng jpeg giflib; fi
 
 script:
   - npm update music-api
@@ -50,6 +53,8 @@ deploy:
     - releases/*.dmg
     - releases/*.exe
   skip_cleanup: true
+  on:
+      tags: true
 
 branches:
   only:
